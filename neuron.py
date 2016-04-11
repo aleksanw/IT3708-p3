@@ -31,7 +31,6 @@ class Neural_net(object):
         dot = np.dot
         cat = np.concatenate
         weights = self.weights
-        for x in range(iter_limit):
-            syn = sigmoid(dot(weights, cat((inputs, syn))))
+        syn = sigmoid(dot(weights, cat((inputs, syn))))
         self.syn = syn
         return output_to_rulf(syn[:3])
