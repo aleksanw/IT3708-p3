@@ -35,9 +35,7 @@ class Candidate(object):
         for y in range(len(self.weights)):
             for x in range(len(self.weights[y])):
                 if random.random() <= probability:
-                    # mutation is done by moving the weight slightly up or
-                    # down. Might want to bound this.
-                    self.weights[y][x] += random.uniform(-1, 1) * 0.001
+                    self.weights[y][x] += random.uniform(-1, 1)
 
     def crossover(self, other):
         point = random.randrange(len(self.weights))
@@ -82,7 +80,7 @@ class Population(object):
             boards_copy = copy.deepcopy(boards)
             candidate.calculate_fitness(boards_copy)
 
-        for i in range(self.max_generations):
+        while True:
             # Create new boards for each generation if this is a dynamic run
             if self.run_type == "dynamic":
                 boards = flatland.create_boards(10, 0.3, 0.3, self.num_boards)
@@ -150,7 +148,7 @@ def run(run_type, num_boards):
     size = 100
     max_generations = 100
     timesteps = 60
-    probability = 0.0000000001
+    probability = 0.01
     num_elites = 2
     population = Population(Candidate, size, timesteps, max_generations, probability, num_elites, run_type, num_boards)
     for generation in population.evolve():
